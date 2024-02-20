@@ -169,11 +169,18 @@ export class NewsController {
     const news = this.NewsService.getAll(query);
     return news;
   }
+  @Get('/aggregateByDate') // Changed route path here
+  async aggregateNewsByDate(): Promise<any[]> {
+    return this.NewsService.aggregateNewsByDate();
+  }
+
   @Get(':id')
-  async getBlogs(
-    @Param('id')
-    id: string,
-  ): Promise<any> {
+  async getBlogsById(@Param('id') id: string): Promise<any> {
     return this.NewsService.findById(id);
+  }
+
+  @Get('/author/aggregateByDate') // Changed route path here
+  async aggregateNews(): Promise<any[]> {
+    return this.NewsService.aggregateNews();
   }
 }

@@ -109,4 +109,52 @@ export class NewsService {
     }
     return blog;
   }
+  async aggregateNewsByDate(): Promise<any[]> {
+    return this.NewsModel.aggregate([
+      {
+        $group: {
+          _id: {
+            $dateToString: {
+              format: '%Y-%m-%d',
+              date: { $toDate: '$published' },
+            },
+          },
+          participants: { $sum: '$participants' },
+          replies_count: { $sum: '$replies_count' },
+        },
+      },
+      {
+        $project: {
+          date: '$_id',
+          participants: 1,
+          replies_count: 1,
+          _id: 0,
+        },
+      },
+      { $sort: { date: 1 } },
+    ]);
+  }
+  async aggregateNews(): Promise<any[]> {
+    return this.NewsModel.aggregate([
+      {
+        $group: {
+          _id: {
+            $dateToString: {
+              format: '%Y-%m-%d',
+              date: { $toDate: '$published' },
+            },
+          },
+          author: { $sum: '$participants' },
+        },
+      },
+      {
+        $project: {
+          date: '$_id',
+          author: 1,
+          _id: 0,
+        },
+      },
+      { $sort: { date: 1 } },
+    ]);
+  }
 }
