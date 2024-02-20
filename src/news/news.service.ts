@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Country } from 'src/relations/schemas/Country.scheme';
@@ -94,7 +94,19 @@ export class NewsService {
     const skip = resPerPage * (currentPage - 1);
 
     const News = await this.NewsModel.find().limit(resPerPage).skip(skip);
-
     return News;
+  }
+
+  async findById(id: string): Promise<any> {
+    const blog = await this.NewsModel.findById(id)
+      .populate('language')
+      .populate('country');
+
+    console.log('this is blog : ', blog);
+
+    if (!blog) {
+      throw new NotFoundException('Blog not found.');
+    }
+    return blog;
   }
 }

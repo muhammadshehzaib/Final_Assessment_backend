@@ -6,6 +6,7 @@ import {
   BadRequestException,
   Get,
   Query,
+  Param,
 } from '@nestjs/common';
 
 import { NewsService } from './news.service';
@@ -167,5 +168,12 @@ export class NewsController {
     console.log(query.get);
     const news = this.NewsService.getAll(query);
     return news;
+  }
+  @Get(':id')
+  async getBlogs(
+    @Param('id')
+    id: string,
+  ): Promise<any> {
+    return this.NewsService.findById(id);
   }
 }
