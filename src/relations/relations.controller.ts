@@ -19,22 +19,22 @@ import { RelationsDto } from './dtos/Relations.dto';
 export class RelationsController {
   constructor(private RelationsService: RelationsService) {}
 
-  @Post()
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './files',
-        filename: (req, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          callback(
-            null,
-            `${file.originalname}-${uniqueSuffix}${extname(file.originalname)}`,
-          );
-        },
-      }),
-    }),
-  )
+  // @Post()
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     storage: diskStorage({
+  //       destination: './files',
+  //       filename: (req, file, callback) => {
+  //         const uniqueSuffix =
+  //           Date.now() + '-' + Math.round(Math.random() * 1e9);
+  //         callback(
+  //           null,
+  //           `${file.originalname}-${uniqueSuffix}${extname(file.originalname)}`,
+  //         );
+  //       },
+  //     }),
+  //   }),
+  // )
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     if (!file) {
       throw new BadRequestException('No file uploaded');
