@@ -20,23 +20,23 @@ import { readFileSync } from 'fs';
 export class NewsController {
   constructor(private NewsService: NewsService) {}
 
-  @Post()
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './files',
-        filename: (req, file, callback) => {
-          // Custom filename to avoid duplicates
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          callback(
-            null,
-            `${file.originalname}-${uniqueSuffix}${extname(file.originalname)}`,
-          );
-        },
-      }),
-    }),
-  )
+  // @Post()
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     storage: diskStorage({
+  //       destination: './files',
+  //       filename: (req, file, callback) => {
+  //         // Custom filename to avoid duplicates
+  //         const uniqueSuffix =
+  //           Date.now() + '-' + Math.round(Math.random() * 1e9);
+  //         callback(
+  //           null,
+  //           `${file.originalname}-${uniqueSuffix}${extname(file.originalname)}`,
+  //         );
+  //       },
+  //     }),
+  //   }),
+  // )
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     if (!file) {
       throw new BadRequestException('file is missing ...');
