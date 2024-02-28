@@ -1,20 +1,15 @@
 import {
-  Controller,
-  Post,
-  UseInterceptors,
-  UploadedFile,
   BadRequestException,
+  Controller,
   Get,
-  Query,
   Param,
+  Query,
+  UploadedFile,
 } from '@nestjs/common';
 
-import { NewsService } from './news.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
-import { parse } from 'papaparse';
 import { readFileSync } from 'fs';
+import { parse } from 'papaparse';
+import { NewsService } from './news.service';
 
 @Controller('news')
 export class NewsController {
